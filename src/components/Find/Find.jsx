@@ -1,42 +1,39 @@
 import "./Find.css"
-import react, { useState, useEffect } from "react";
+import react, { useState } from "react";
 import axios from 'axios';
+import Card from "../Cards/Card.jsx"
 function Find() {
   const [name, setname] = useState("");
   const [isdata,setisdata] = useState(false);
-  // useEffect(() => {
+  const [reald,setreald] = useState({});
+  const [realdstatus,setrealdstatus] = useState(false);
+     // useEffect(() => {
   //   axios.get("http://localhost:5000/get").then((response) => {
   //    console.log(response);
   //   })
   // }, [])
-
   const handle = (e) => {
     e.preventDefault();
     try {
-      axios.post("http://localhost:5000/getusers", {
+      axios.post("http://localhost:5000/get", {
         name
       }).then((x) => {
         setisdata(!isdata);
-        console.log(x); 
         if(x.data.data.length === 0){
-          console.log("NO user");
-        }else{
-          x.data.data.map(el,i =>{
-            console.log(el);
-          })
-        }
+          setreald([]);
+          console.log("HERe");
+          setrealdstatus(true);
+        }else if(x.data.data.length>0){
+      setreald(x.data.data[0].orders);
+      setrealdstatus(false);
+    }
       })
     } catch (error) {
       console.log(error)
     }
-  }
-
+  }    
   return (
     <div>
-    {
-      isdata  ? <div className="box">
-       <h1>f</h1>
-      </div> :  
       <div className='box'>
       <h1>Hey User</h1>
       <hr></hr>
@@ -55,7 +52,28 @@ function Find() {
       </form>
       
     </div>
-    }
+      {realdstatus ? 
+        <h1>No Users Found</h1>
+      : 
+        
+          isdata  ?
+           <div className="boxx"> 
+           {
+            reald.map(el =>{
+              return (
+              <Card 
+              listid ={el.list}
+              amount = {el.amount}
+              dat = {el.date}
+              />
+              )
+    
+            })
+          }
+         
+          </div> : null}
+     
+    
     </div>
    
   )

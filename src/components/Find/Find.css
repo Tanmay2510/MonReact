@@ -5,6 +5,13 @@
     padding-top:5%;
     /* left:50%; */
 }
+.boxx{
+    display: flex;
+    
+    justify-content: space-evenly;
+    margin-top: 3vw;
+    padding-bottom: 3vw;
+}
 h1{
     color: wheat;
     font-size: 5vw;
