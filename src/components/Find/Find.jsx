@@ -11,18 +11,15 @@ function Find() {
     
   const handl = (e) => {
     e.preventDefault();
-    console.log(name)
-
     try {
-      axios.post("http://localhost:5000/getusers", {
-        name
-      }).then((x) => {
+      axios.get("http://localhost:5000/getusers/"+name).then((x) => {
         setisdata(!isdata);
-        if(x.data.data.length === 0){
+        console.log(x.data);
+        if(x.data === 0){
           setreald([]);
           setrealdstatus(true);
-        }else if(x.data.data.length>0){
-      setreald(x.data.data[0].orders);-
+        }else if(x.data.length>0){
+      setreald(x.data[0].orders);-
       setrealdstatus(false);
     }
       })
@@ -31,17 +28,17 @@ function Find() {
     }
   }  
   const hand = (e) => {
+    console.log(date)
     e.preventDefault();
     try {
-      axios.post("http://localhost:5000/getdate", {
-        date
-      }).then((x) => {
+      axios.get("http://localhost:5000/getdate/"+date).then((x) => {
         console.log(x);
       })
     } catch (error) {
       console.log(error)
     }
-  }     
+  }   
+  
   console.log(name)
   return (
     <div>
@@ -62,36 +59,32 @@ function Find() {
         <input type="date" onChange={(e)=>{setdate(e.target.value)}}></input>
         <button type="submit">GO</button>
       </form>
-      
     </div>
-      {realdstatus ? 
-        <h1>No Users Found</h1>
-      : 
-        
-          isdata  ?
-          <div>
-          <p>Ordered by {name}</p>
-           <div className="boxx"> 
-           {
-            reald.map(el =>{
-              return (
-              <Card 
-              listid ={el.list}
-              amount = {el.amount}
-              dat = {el.date}
-              />
-              )
-    
-            })
-          }
-          </div>
-         
-          </div> : null}
+    {realdstatus ? 
+  <h1>No Users Found</h1>
+: 
+    isdata  ?
+    <div>
+    <p>Ordered by {name}</p>
+     <div className="boxx"> 
+     {
+      reald.map(el =>{
+        return (
+        <Card 
+        listid ={el.list}
+        amount = {el.amount}
+        dat = {el.date}
+        />
+        )
+      })
+    }
+    </div>
+    </div> : null}
      
-    
     </div>
    
   )
 }
 
 export default Find
+
