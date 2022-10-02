@@ -8,18 +8,16 @@ function Find() {
   const [isdata,setisdata] = useState(false);
   const [isdatacal,setisdatacal] = useState(false)
   const [reald,setreald] = useState({});
+  const [realdd,setrealdd] = useState({});
   const [realdstatus,setrealdstatus] = useState(false);
-  const [dateobj,setdateobj] = useState([])
   const handl = (e) => {
     e.preventDefault();
     try {
       axios.get("http://localhost:5000/getusers/"+name).then((x) => {
         setisdata(!isdata);
-        console.log(x.data);
-        if(x.data === 0){
+        if(x.data.length === 0){
           setreald([]);
           setrealdstatus(true);
-          setisdatacal(false);
         }else if(x.data.length>0){
       setreald(x.data[0].orders);
       setrealdstatus(false);
@@ -36,31 +34,21 @@ function Find() {
       axios.get("http://localhost:5000/getdate/"+date).then((x) => {
           x.data.dat.map((e,k)=>{
             e.orders.map((ford,kk)=>{
-                let ct = (ford.date).toString().substring(10)
-                let comp = date+ct;
+                let comp = date+(ford.date).toString().substring(10);
                 if(ford.date == comp){
-                  // e.orders.map(el=>{
-                  //   return (
-                  //     <Card 
-                  //     listid ={el.list}
-                  //     amount = {el.amount}
-                  //     dat = {el.date}
-                  //     />
-                  //   )
-                  // })
+                  setrealdd(x.data.dat)
+         setisdatacal(true);
+
                 }
-                
             })
          })
-         setisdatacal(true);
-        
-        
       })
     } catch (error) {
       console.log(error)
     }
   }
- 
+  
+  
   return (
     <div>
       <div className='box'>
@@ -81,27 +69,45 @@ function Find() {
         <button type="submit">GO</button>
       </form>
     </div>
-    {realdstatus ? 
-  <h1>No Users Found</h1>
-: 
-    isdata  ?
-    <div>
-    <p>Ordered by {name}</p>
-     <div className="boxx"> 
-     {
-      reald.map(el =>{
-        return (
-        <Card 
-        listid ={el.list}
-        amount = {el.amount}
-        dat = {el.date}
-        />
-        )
-      })
-    }
-    </div>
-    </div> : null}
-    <Card />
+    {realdstatus ? <p>No user found</p> :  isdata  ?
+        <div>
+        <p>Ordered by {name}</p>
+         <div className="boxx"> 
+         {
+          reald.map(el =>{
+            return (
+            <Card 
+            listid ={el.list}
+            amount = {el.amount}
+            dat = {el.date}
+            />
+            )
+          })
+        }
+        </div>
+        </div> : null}
+
+        {
+            isdatacal ?
+            <div>
+            <p>Ordered by</p>
+             <div > 
+             {
+              realdd.map(dateobj=>{
+
+              dateobj.orders.map(el =>{
+                console.log(el.list)
+                return (
+                <h2>hiii</h2>
+                )
+              })
+            })
+
+            }
+            </div>
+            </div>
+            : null
+          }
     </div>
    
   )
@@ -109,23 +115,3 @@ function Find() {
 
 export default Find
 
-// {
-//   isdatacal ?
-//   <div>
-//   <p>Ordered by {dateobj.ename}</p>
-//    <div className="boxx"> 
-//    {
-//     dateobj.arr.map(el =>{
-//       return (
-//       <Card 
-//       listid ={el.list}
-//       amount = {el.amount}
-//       dat = {el.date}
-//       />
-//       )
-//     })
-//   }
-//   </div>
-//   </div>
-//   : null
-// }

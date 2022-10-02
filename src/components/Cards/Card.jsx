@@ -1,12 +1,9 @@
 import React from 'react'
-import Card from '@mui/material/Card';
 import "./Card.css"
-import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
 
 const card = (props) => {
   return (
-    <>
+    <div>
     <div className='fl'>
      <h2> User Order history </h2>
       <ul type = "disc">
@@ -22,7 +19,7 @@ const card = (props) => {
   </div>
 
   
-          </>
+          </div>
   )
 }
 
