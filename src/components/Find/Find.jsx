@@ -6,9 +6,10 @@ function Find() {
   const [name, setname] = useState("");
   const [date,setdate] =useState(null)
   const [isdata,setisdata] = useState(false);
+  const [isdatacal,setisdatacal] = useState(false)
   const [reald,setreald] = useState({});
   const [realdstatus,setrealdstatus] = useState(false);
-    
+  const [dateobj,setdateobj] = useState([])
   const handl = (e) => {
     e.preventDefault();
     try {
@@ -18,8 +19,9 @@ function Find() {
         if(x.data === 0){
           setreald([]);
           setrealdstatus(true);
+          setisdatacal(false);
         }else if(x.data.length>0){
-      setreald(x.data[0].orders);-
+      setreald(x.data[0].orders);
       setrealdstatus(false);
     }
       })
@@ -32,14 +34,33 @@ function Find() {
     e.preventDefault();
     try {
       axios.get("http://localhost:5000/getdate/"+date).then((x) => {
-        console.log(x);
+          x.data.dat.map((e,k)=>{
+            e.orders.map((ford,kk)=>{
+                let ct = (ford.date).toString().substring(10)
+                let comp = date+ct;
+                if(ford.date == comp){
+                  // e.orders.map(el=>{
+                  //   return (
+                  //     <Card 
+                  //     listid ={el.list}
+                  //     amount = {el.amount}
+                  //     dat = {el.date}
+                  //     />
+                  //   )
+                  // })
+                }
+                
+            })
+         })
+         setisdatacal(true);
+        
+        
       })
     } catch (error) {
       console.log(error)
     }
-  }   
-  
-  console.log(name)
+  }
+ 
   return (
     <div>
       <div className='box'>
@@ -80,7 +101,7 @@ function Find() {
     }
     </div>
     </div> : null}
-     
+    <Card />
     </div>
    
   )
@@ -88,3 +109,23 @@ function Find() {
 
 export default Find
 
+// {
+//   isdatacal ?
+//   <div>
+//   <p>Ordered by {dateobj.ename}</p>
+//    <div className="boxx"> 
+//    {
+//     dateobj.arr.map(el =>{
+//       return (
+//       <Card 
+//       listid ={el.list}
+//       amount = {el.amount}
+//       dat = {el.date}
+//       />
+//       )
+//     })
+//   }
+//   </div>
+//   </div>
+//   : null
+// }
