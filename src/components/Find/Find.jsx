@@ -12,13 +12,12 @@ function Find() {
   const [iscalval,setiscalval] = useState(false);  //for date null or not
   const [realdstatus,setrealdstatus] = useState(false);
   const handl = (e) => {
-    e.preventDefault();
     try {
       axios.get("http://localhost:5000/getusers/"+name).then((x) => {
-        setisdata(!isdata);
+        setisdata(true);
         if(x.data.length === 0){
           setreald([]);
-          setrealdstatus(true);
+          setrealdstatus(!realdstatus);
         }else if(x.data.length>0){
       setreald(x.data[0].orders);
       setrealdstatus(false);
@@ -27,6 +26,8 @@ function Find() {
     } catch (error) {
       console.log(error)
     }
+    e.preventDefault();
+
   }  
   let a = [];
   const hand = (e) => {
@@ -46,6 +47,7 @@ function Find() {
           setiscalval(true)
          }else{
           setiscalval(false)
+          
          }
          setisdatacal(false);
 
@@ -73,7 +75,8 @@ function Find() {
         <button type="submit">GO</button>
       </form>
       <form onSubmit={hand}>
-        <input type="date" onChange={(e)=>{setdate(e.target.value)}}></input>
+        <input type="date" onChange={(e)=>{setdate(e.target.value)}}
+        value={date}></input>
         <button type="submit">GO</button>
       </form>
     </div>
