@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Card.css"
 
 const card = (props) => {
   return (
-    <div>
     <div className='fl'>
      <h2> User Order history </h2>
       <ul type = "disc">
@@ -14,12 +13,14 @@ const card = (props) => {
       <li>Date of Order :{props.dat}
       </li>
       </ul>
-    
-    
+    {
+      props.name? 
+    <h2 >Ordered by { props.name }</h2>
+      :null
+    }
   </div>
 
   
-          </div>
   )
 }
 

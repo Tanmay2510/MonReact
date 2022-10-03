@@ -6,9 +6,10 @@ function Find() {
   const [name, setname] = useState("");
   const [date,setdate] =useState(null)
   const [isdata,setisdata] = useState(false);
-  const [isdatacal,setisdatacal] = useState(false)
+  const [isdatacal,setisdatacal] = useState(true)
   const [reald,setreald] = useState({});
   const [realdd,setrealdd] = useState({});
+  const [iscalval,setiscalval] = useState(false);  //for date null or not
   const [realdstatus,setrealdstatus] = useState(false);
   const handl = (e) => {
     e.preventDefault();
@@ -27,8 +28,8 @@ function Find() {
       console.log(error)
     }
   }  
+  let a = [];
   const hand = (e) => {
-    console.log(date)
     e.preventDefault();
     try {
       axios.get("http://localhost:5000/getdate/"+date).then((x) => {
@@ -36,19 +37,26 @@ function Find() {
             e.orders.map((ford,kk)=>{
                 let comp = date+(ford.date).toString().substring(10);
                 if(ford.date == comp){
-                  setrealdd(x.data.dat)
-         setisdatacal(true);
-
+                      a.push(e)
+                     setrealdd(a)  
                 }
             })
          })
+         if(a.length===0){
+          setiscalval(true)
+         }else{
+          setiscalval(false)
+         }
+         setisdatacal(false);
+
       })
     } catch (error) {
       console.log(error)
     }
   }
-  
-  
+ 
+
+
   return (
     <div>
       <div className='box'>
@@ -69,7 +77,7 @@ function Find() {
         <button type="submit">GO</button>
       </form>
     </div>
-    {realdstatus ? <p>No user found</p> :  isdata  ?
+    {realdstatus ? <p>No users found(by name search)</p> :  isdata  ?
         <div>
         <p>Ordered by {name}</p>
          <div className="boxx"> 
@@ -87,27 +95,39 @@ function Find() {
         </div>
         </div> : null}
 
-        {
-            isdatacal ?
+
+      {
+        iscalval ? <p>No users found(by date search)</p>:
+        
+            isdatacal ? null:
             <div>
-            <p>Ordered by</p>
-             <div > 
+            <p>Filter by date {date}</p>
+             <div className="boxx" > 
              {
-              realdd.map(dateobj=>{
-
-              dateobj.orders.map(el =>{
-                console.log(el.list)
-                return (
-                <h2>hiii</h2>
-                )
-              })
-            })
-
+              realdd.map((dateobj)=>{
+              
+                   return(
+                    dateobj.orders.map((el,ke)=>{
+                    return(
+                      <div>
+                      <Card 
+                      key ={ke}
+                      listid ={el.list}
+                      amount = {el.amount}
+                      dat = {el.date}
+                      name={dateobj.firstName}
+                      />
+                      </div>
+                    )
+                   })   
+                   )
+                })
             }
             </div>
             </div>
-            : null
           }
+      
+
     </div>
    
   )
