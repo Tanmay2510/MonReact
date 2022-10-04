@@ -29,16 +29,26 @@ function Find() {
     e.preventDefault();
   }
   let a = [];
+  let b = [];
   const hand = (e) => {
     e.preventDefault();
     try {
       axios.get("http://localhost:5000/getdate/" + date).then((x) => {
         if (x.data.dat.length === 0) {
-          setiscalval(true)
+          // setiscalval(true)
         } else if (x.data.dat.length > 0) {
           x.data.dat.map(el => {
-            a.push(el)
-            setrealdd(a)
+            el.orders.map(finaldate=>{
+               if(finaldate.date.substring(0,10) == date){
+                console.log(el.firstName)
+                const ne = {
+                  name:el.firstName,
+                  arr:finaldate
+                }
+                a.push(ne)
+                setrealdd(a)
+               }
+            })
             setiscalval(false)
           })
         }
@@ -91,26 +101,20 @@ function Find() {
 
       {
         iscalval ? <p>No user found(by date search)</p> :
-
           isdatacal ? null :
             <div>
               <p>Filter by date {date}</p>
               <div className="boxx" >
                 {
                   realdd.map((dateobj) => {
-                    console.log(dateobj)
-                    return (
-                      dateobj.orders.map(el => {
-                        return (
-                          <Card
-                            listid={el.list}
-                            amount={el.amount}
-                            dat={el.date}
-                            name={dateobj.firstName}
-                          />
-                        )
-                      })
-                    )
+                   return(
+                    <Card
+                    listid={dateobj.arr.list}
+                    amount={dateobj.arr.amount}
+                    dat={dateobj.arr.date}
+                    name={dateobj.name}
+                  />
+                   )
                   })
                 }
               </div>
