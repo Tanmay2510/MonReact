@@ -14,15 +14,14 @@ function Find() {
   const [realdstatus, setrealdstatus] = useState(false);
   const [thea, setthea] = useState([]);
   const [distp, setdisp] = useState(false);
-  const [isf, setisf] = useState(false);
   const wrapperref = useRef(null)
   const handl = (e) => {
     try {
-      axios.get("http://localhost:5000/getusers/" + name).then((x) => {
+      axios.get("https://spotapin.herokuapp.com/getusers/" + name).then((x) => {
         setisdata(true);
         if (x.data.length === 0) {
           setreald([]);
-          setrealdstatus(!realdstatus);
+          setrealdstatus(true);
         } else if (x.data.length > 0) {
           setreald(x.data[0].orders);
           setrealdstatus(false);
@@ -38,7 +37,7 @@ function Find() {
   const hand = (e) => {
     e.preventDefault();
     try {
-      axios.get("http://localhost:5000/getdate/" + date).then((x) => {
+      axios.get("https://spotapin.herokuapp.com/getdate/" + date).then((x) => {
         if (x.data.dat.length === 0) {
           setiscalval(true)
         } else if (x.data.dat.length > 0) {
@@ -65,7 +64,7 @@ function Find() {
   }
   useEffect(() => {
     try {
-      axios.get("http://localhost:5000/search").then(x => {
+      axios.get("https://spotapin.herokuapp.com/search").then(x => {
         setthea(x.data.data);
       })
     } catch (error) {
