@@ -13,7 +13,52 @@
     margin-top: 3vw;
     padding-bottom: 3vw;
 }
+.flex-container {
+    display: flex;
+  }
+  .flex-column {
+    flex-direction: column;
+  }
+  .pos-rel {
+    position: relative;
+  }
+  
+  
+.autoContainer {
+    position: absolute;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: rgba(16,18,27,0.4);
+    background: rgba(16,18,27,0.4);
+    
+    margin-top: -2vw;
+    margin-left: 38vw;
+    width: 19vw;
+    color: white;
+  }
+  .box button{
+    width:5vw;
+    width: 60px;
+    color:beige;
+    background-color: rgba(212, 235, 235, 0.356);
+    height: 3vw;
+    border-radius: 50px;
+    border: none;
+
+}
+.box button:hover{
+    cursor: pointer;
+}
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20vw;
+    padding: 5px;
+  }
+  
 h1{
+
     color: wheat;
     font-size: 5vw;
     font-family: 'Montserrat', sans-serif;
@@ -44,7 +89,16 @@ hr{
     width: 50vw;
 }
 
-
+@media all and (max-width:920px){
+    .autoContainer{
+        margin-left: 37vw;
+    }
+}
+@media all and (max-width:750px){
+    .autoContainer{
+        margin-left: 35vw;
+    }
+}
 @media all and (max-width:650px){
     p{
         font-size: 3.5vw;
@@ -57,6 +111,15 @@ hr{
         height: 30px;
         font-size: 2vw;
     }
+    .box button{
+        width:55px;
+        height: 25px;
+    }
+}
+@media all and (max-width:500px){
+    .autoContainer{
+        margin-left: 34vw;
+    }
 }
 @media all and (max-width:430px){
    .box input{
@@ -64,6 +127,10 @@ hr{
    }
    input::placeholder{
     font-size: 1.8vw;
+}
+.autoContainer{
+    width: 30vw;
+    margin-left: 28vw;
 }
 }
 @media all and (max-width:390px){
@@ -73,4 +140,13 @@ hr{
     input::placeholder{
      font-size: 2vw;
  }
+ .autoContainer{
+    width: 35vw;
+    margin-left: 24vw;
+}
  }
+ @media all and (max-width:350px){
+    .autoContainer{
+        margin-left: 22vw;
+    }
+}
