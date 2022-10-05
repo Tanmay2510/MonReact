@@ -43,25 +43,13 @@ p{
 hr{
     width: 50vw;
 }
-.box button{
-    width: 60px;
-    color:beige;
-    background-color: rgba(212, 235, 235, 0.356);
-    height: 3vw;
-    border-radius: 50px;
-    border: none;
-}
-.box button:hover{
-    cursor: pointer;
-}
+
+
 @media all and (max-width:650px){
     p{
         font-size: 3.5vw;
     }
-    .box button{
-        width:55px;
-        height: 25px;
-    }
+   
     input::placeholder{
         font-size: 1.3vw;
     }
